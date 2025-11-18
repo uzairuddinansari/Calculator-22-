@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Information Grid</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link rel="stylesheet" href="./style.css"> -->
+   <style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    font-family: Arial, sans-serif;
+}
+
+/* Calculator Main Body */
+.calculator{
+    width: 320px;
+    background: #1c1c1e;
+    padding: 15px;
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* Display */
+#a{
+    width: 100%;
+    height: 100px;
+    background: #1c1c1e;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    text-align: right;
+    padding: 20px;
+    border-radius: 20px;
+    outline: none;
+}
+
+
+
+/* All buttons */
+button{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: none;
+    margin: 5px;
+    font-size: 1.5rem;
+     background: linear-gradient(#3a3a3c, #2c2c2e);
+    font-weight: 600;
+    cursor: pointer;
+   
+     transition: transform 0.1s ease, filter 0.2s ease;
+}
+
+#plus, #min, #mul, #slash, #mod, #equ{
+    background: linear-gradient(#f7a33a, #f69906);
+}
+
+/* Number buttons (Gray) */
+button:not(#plus):not(#min):not(#mul):not(#slash):not(#mod):not(#equ):not(#clear):not(#remove){
+    background: #2c2c2e;
+    color: white;
+}
+
+/* iPhone Orange Buttons (Operators) */
+#plus, #min, #mul, #slash, #mod, #equ{
+    background: #f69906;
+    color: white;
+}
+
+/* Clear + Delete buttons (Light Gray) */
+#clear, #remove{
+    background: #d4d4d2;
+    color: black;
+}
+
+/* Button Press Animation (like iPhone) */
+button:active{
+    transform: scale(0.90);
+    filter: brightness(1.2);
+}
+/* Align all rows */
+.section-1,
+.section-2,
+.section-3,
+.section-4,
+.section-5{
+    display: flex;
+    justify-content: center;
+}
+.active-effect{
+    transform: scale(0.88);
+    filter: brightness(1.4);
+}
+#num00{
+    width: 65px;
+    border-radius: 50px;
+}
+
+.section-5 button {
+    height: 65px;  /* normal height */
+    width: 65px;   /* default width for 0 and . */
+    border-radius: 50%;
+}
+</style>
+</head>
+<body>
+  <div class="calculator">
+ <input type="text" value="" id="a" readonly>
+ <div class="section-1"> 
+  <button id="mod">%</button>
+  <button id="slash">/</button>
+  <button id="remove">DEL</button>
+  <button id="clear">A/C</button>
+</div>
+<div class="section-2">
+  <button id="num7">7</button>
+  <button id="num8">8</button>
+  <button id="num9">9</button>
+  <button id="mul">*</button>
+</div>
+<div class="section-3">
+  <button id="num4">4</button>
+  <button id="num5">5</button>
+  <button id="num6">6</button>
+  <button id="min">-</button>
+</div>
+<div class="section-4">
+  <button id="num1" class="o">1</button>
+  <button id="num2" class="o">2</button>
+  <button id="num3">3</button>
+  <button id="plus">+</button>
+</div>
+<div class="section-5">
+   <button id="num00">00</button>
+  <button id="num0">0</button>
+  <button id="dot">.</button>
+  <button id="equ">=</button>
+</div>
+</div>
+   <script>
+    let num1 = document.querySelector("#num1")
+let num2 = document.querySelector("#num2")
+let num3 = document.querySelector("#num3")
+let num4 = document.querySelector("#num4")
+let num5 = document.querySelector("#num5")
+let num6 = document.querySelector("#num6")
+let num7 = document.querySelector("#num7")
+let num8 = document.querySelector("#num8")
+let num9 = document.querySelector("#num9")
+let num0 = document.querySelector("#num0")
+let num00 = document.querySelector("#num00")
+let plus = document.querySelector("#plus")
+let dot = document.querySelector("#dot")
+let min = document.querySelector("#min")
+let mul = document.querySelector("#mul")
+let mod = document.querySelector("#mod")
+let slash = document.querySelector("#slash")
+let a = document.querySelector("#a")
+let remove = document.querySelector("#remove")
+let clear = document.querySelector("#clear")
+let equ = document.querySelector("#equ")
+
+let tap = new Audio("./mixkit-hard-typewriter-click-1119.wav");
+tap.volume = 0.5;
+
+if ("vibrate" in navigator) {
+    navigator.vibrate(10);
+}
+
+function playSound(){
+    tap.currentTime = 0; 
+    tap.play();
+
+     if ("vibrate" in navigator) {
+        navigator.vibrate(10);
+    }
+}
+
+num1.addEventListener("click", function(){
+     playSound()
+    a.value += "1"
+})
+num2.addEventListener("click", function(){
+     playSound()
+    a.value += "2"
+})
+num3.addEventListener("click", function(){
+     playSound()
+    a.value += "3"
+})
+num4.addEventListener("click", function(){
+     playSound()
+    a.value += "4"
+})
+num5.addEventListener("click", function(){
+     playSound()
+    a.value += "5"
+})
+num6.addEventListener("click", function(){
+     playSound()
+    a.value += "6"
+})
+num7.addEventListener("click", function(){
+     playSound()
+    a.value += "7"
+})
+num8.addEventListener("click", function(){
+     playSound()
+    a.value += "8"
+})
+num9.addEventListener("click", function(){
+     playSound()
+    a.value += "9"
+})
+num0.addEventListener("click", function(){
+     playSound()
+    a.value += "0"
+})
+num00.addEventListener("click", function(){
+     playSound()
+    a.value += "00"
+})
+remove.addEventListener("click",function(){
+     playSound()
+    a.value = a.value.slice(0, -1)
+})
+clear.addEventListener("click", function(){
+     playSound()
+    a.value = ""
+})
+plus.addEventListener("click",function(){
+     playSound()
+    a.value += "+"
+})
+min.addEventListener("click",function(){
+     playSound()
+    a.value += "-"
+})
+mul.addEventListener("click",function(){
+     playSound()
+    a.value += "*"
+})
+mod.addEventListener("click",function(){
+     playSound()
+    a.value += "%"
+})
+slash.addEventListener("click",function(){
+     playSound()
+    a.value += "/"
+})
+dot.addEventListener("click",function(){
+     playSound()
+    a.value += "."
+})
+equ.addEventListener("click",function(){
+     playSound()
+    if(a.value !== ""){
+        a.value = eval(a.value);
+    }
+})
+document.addEventListener("keydown", function(e){
+     playSound()
+    const allowed = "0123456789+-*/.%";
+    if (allowed.includes(e.key)) {
+        a.value += e.key;
+    }
+
+    if (e.key === "Backspace") {
+        a.value = a.value.slice(0, -1);
+    }
+
+    if (e.key === "Enter") {
+        a.value = eval(a.value);
+    }
+});
+
+
+document.addEventListener("keydown", (e)=>{
+    let keyBtn = document.querySelector(`button[data-key="${e.key}"]`);
+    if(keyBtn){
+        keyBtn.classList.add("active-effect");
+        setTimeout(() => keyBtn.classList.remove("active-effect"), 150);
+    }
+});
+
+   </script>
+</body>
+</html>
